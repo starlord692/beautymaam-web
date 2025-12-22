@@ -1,0 +1,12 @@
+Django>=4.2,<5.0
+djangorestframework
+psycopg2-binary
+gunicorn
+dj-database-url
+whitenoise
+cloudinary
+django-cloudinary-storage
+python-dotenv
+Pillow
+phonenumbers
+django-phonenumber-field[phonenumbers]

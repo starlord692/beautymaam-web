@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="section-padding bg-cream" style="min-height: 100vh;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="text-center mb-5">
+                    <h1 class="display-3 font-serif">Reserve Time</h1>
+                    <p class="editorial-text">Select your preferred service and time.</p>
+                </div>
+
+                <form method="post" id="bookingForm" class="bg-white p-5 shadow-sm border border-light">
+                    {% csrf_token %}
+
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label">Full Name</label>
+                            {{ form.customer_name }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Phone Number</label>
+                            {{ form.customer_phone }}
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Email Address</label>
+                            {{ form.customer_email }}
+                            <div class="text-danger small">{{ form.customer_email.errors }}</div>
+                        </div>
+                    </div>
+
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                    {% endif %}
+
+                    <div class="mb-5">
+                        <label class="form-label">Service</label>
+                        {{ form.service }}
+                        <div class="text-danger small">{{ form.service.errors }}</div>
+                    </div>
+
+                    <div class="row g-4 mb-5">
+                        <div class="col-md-6">
+                            <label class="form-label">Date</label>
+                            {{ form.date }}
+                            <div class="text-danger small">{{ form.date.errors }}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Time Slot</label>
+                            <select name="time_slot" id="id_time_slot" class="form-select" required>
+                                <option value="">Select Date First</option>
+                            </select>
+                            <div class="text-danger small">{{ form.time_slot.errors }}</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Location Preference</label>
+                        {{ form.appointment_type }}
+                        <div class="mt-2 text-beige font-serif fst-italic" id="priceDisplay">
+                            <!-- JS fills this -->
+                        </div>
+                    </div>
+
+                    <div class="mb-5" id="addressField" style="display:none;">
+                        <label class="form-label">Home Address</label>
+                        {{ form.address }}
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn-editorial w-100">Confirm Booking</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const dateInput = document.getElementById('id_date');
+        const serviceInput = document.getElementById('id_service');
+        const slotSelect = document.getElementById('id_time_slot');
+        const typeSelect = document.getElementById('id_appointment_type');
+        const addressField = document.getElementById('addressField');
+        const priceDisplay = document.getElementById('priceDisplay');
+
+        // Set min date to today
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.setAttribute('min', today);
+
+        let currentHomePrice = 0;
+        let currentParlourPrice = 0;
+
+        function fetchSlots() {
+            const date = dateInput.value;
+            const serviceId = serviceInput.value;
+
+            if (date && serviceId) {
+                slotSelect.innerHTML = '<option value="">Loading...</option>';
+
+                fetch(`{% url 'get_slots' %}?date=${date}&service_id=${serviceId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        slotSelect.innerHTML = '<option value="">Select Time</option>';
+                        if (data.slots.length > 0) {
+                            data.slots.forEach(time => {
+                                const option = document.createElement('option');
+                                option.value = time;
+                                option.textContent = time;
+                                slotSelect.appendChild(option);
+                            });
+                        } else {
+                            const option = document.createElement('option');
+                            option.textContent = "No slots available";
+                            slotSelect.appendChild(option);
+                        }
+
+                        currentHomePrice = data.home_price || 0;
+                        currentParlourPrice = data.parlour_price || 0;
+                        updatePrice();
+                    });
+            }
+        }
+
+        function updatePrice() {
+            const type = typeSelect.value;
+            if (type === 'HOME') {
+                priceDisplay.innerHTML = `Estimated Total: <strong>₹${currentHomePrice}</strong> <small class='text-muted'>(Home Service)</small>`;
+                addressField.style.display = 'block';
+                document.getElementById('id_address').required = true;
+
+                if (!currentHomePrice) {
+                    priceDisplay.textContent += " - Not available for home";
+                }
+            } else {
+                priceDisplay.innerHTML = `Estimated Total: <strong>₹${currentParlourPrice}</strong> <small class='text-muted'>(Parlour Service)</small>`;
+                addressField.style.display = 'none';
+                document.getElementById('id_address').required = false;
+            }
+        }
+
+        dateInput.addEventListener('change', fetchSlots);
+        serviceInput.addEventListener('change', fetchSlots);
+        typeSelect.addEventListener('change', updatePrice);
+
+        if (serviceInput.value && dateInput.value) {
+            fetchSlots();
+        }
+    });
+</script>
+{% endblock %}

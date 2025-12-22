@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="section-padding bg-cream">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h4 class="text-uppercase small fw-bold mb-3 ls-2 text-muted">The Menu</h4>
+                <h1 class="display-3 mb-5">Curated Services</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-padding pt-0">
+    <div class="container">
+        {% for category in categories %}
+        <div class="row mb-5">
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <h2 class="font-serif fst-italic sticky-top" style="top: 120px;">{{ category.name }}</h2>
+                <p class="text-muted small">{{ category.description }}</p>
+                {% if category.image %}
+                <img src="{{ category.image.url }}" class="img-fluid mt-4 opacity-75 d-none d-lg-block"
+                    alt="{{ category.name }}">
+                {% endif %}
+            </div>
+            <div class="col-lg-7 offset-lg-1">
+                {% for service in category.services.all %}
+                <div class="service-list-item">
+                    <div class="d-flex justify-content-between align-items-baseline mb-2">
+                        <h4 class="mb-0 fs-3">{{ service.name }}</h4>
+                        <span class="service-price fs-4">₹{{ service.parlour_price }}</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9">
+                            <p class="text-muted small mb-0 fw-light">{{ service.description }}</p>
+                            <small class="text-uppercase text-muted mt-2 d-inline-block"
+                                style="font-size: 0.7rem; letter-spacing: 1px;">
+                                <i class="far fa-clock me-1"></i> {{ service.duration_minutes }} MIN
+                                {% if service.is_home_service_available %}
+                                <span class="ms-3 text-beige"><i class="fas fa-home me-1"></i> HOME AVAILABLE</span>
+                                {% endif %}
+                            </small>
+                        </div>
+                        <div class="col-md-3 text-end pt-3 pt-md-0">
+                            <a href="{% url 'book_appointment' %}?service_id={{ service.id }}" class="btn-editorial"
+                                style="padding: 10px 20px; font-size: 0.7rem;">Book</a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <p>No services found in this category.</p>
+                {% endfor %}
+            </div>
+        </div>
+        <hr class="my-5 opacity-25">
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

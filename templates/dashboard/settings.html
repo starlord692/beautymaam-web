@@ -1,0 +1,48 @@
+{% extends 'dashboard/base.html' %}
+
+{% block page_title %}Settings{% endblock %}
+
+{% block content %}
+<div style="display: flex; gap: 30px; flex-wrap: wrap;">
+    <!-- Password Change Card -->
+    <div class="card" style="flex: 1; min-width: 300px;">
+        <div class="card-header">
+            <h2 class="card-title">Change Password</h2>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <!-- Change Password Form -->
+            {% for field in password_form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}
+                <span class="helptext">{{ field.help_text }}</span>
+                {% endif %}
+                {% if field.errors %}
+                <div style="color: red; margin-top: 5px;">{{ field.errors }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" name="change_password" class="btn btn-primary" style="margin-top: 20px;">Update
+                Password</button>
+        </form>
+    </div>
+
+    <!-- User ID (Username) Change Card -->
+    <div class="card" style="flex: 1; min-width: 300px; height: fit-content;">
+        <div class="card-header">
+            <h2 class="card-title">Profile Settings</h2>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">User ID (Username)</label>
+                <input type="text" name="username" id="username" value="{{ user.username }}" required>
+                <span class="helptext">Unique identifier for logging in.</span>
+            </div>
+            <button type="submit" name="update_profile" class="btn btn-primary">Update Profile</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'dashboard/base.html' %}
+
+{% block page_title %}Service{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Service</h2>
+        <div class="actions">
+            <button class="btn btn-outline">
+                Filter <i class='bx bx-filter-alt'></i>
+            </button>
+            <a href="#" class="btn btn-primary">
+                Add Service <i class='bx bx-plus-circle'></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Stats or Info can go here if needed -->
+
+    <table>
+        <thead>
+            <tr>
+                <th>Service Name</th>
+                <th>Service Category</th>
+                <th>Price (Parlour)</th>
+                <th>Duration</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for service in services %}
+            <tr>
+                <td>{{ service.name }}</td>
+                <td>{{ service.category.name }}</td>
+                <td>{{ service.parlour_price }} $</td>
+                <td>{{ service.duration_minutes }}m</td>
+                <td style="text-align: right;">
+                    <button class="more-btn"><i class='bx bx-dots-horizontal-rounded'></i></button>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" style="text-align: center; padding: 30px;">No services found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Design shows pagination below, can implement if list grows -->
+    <!--
+    <div class="pagination">
+        Showing 10 Out Of 187
+        ...
+    </div>
+    -->
+</div>
+{% endblock %}

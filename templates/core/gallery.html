@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="section-padding bg-cream">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="display-3 font-serif">Selected Works</h1>
+            <p class="editorial-text">A visual dialogue of our craft.</p>
+        </div>
+
+        <div class="row g-4">
+            {% for item in images %}
+            <div class="col-md-6 col-lg-4">
+                <div class="position-relative overflow-hidden mb-4">
+                    {% if item.image %}
+                    <img src="{{ item.image.url }}" class="w-100 object-fit-cover" alt="{{ item.title }}"
+                        style="height: 500px; filter: grayscale(20%); transition: all 0.5s ease;"
+                        onmouseover="this.style.filter='grayscale(0%)'" onmouseout="this.style.filter='grayscale(20%)'">
+                    {% else %}
+                    <div class="bg-secondary w-100" style="height: 500px;"></div>
+                    {% endif %}
+                    <div class="mt-3 text-center">
+                        <p class="text-uppercase small ls-2 mb-0">{{ item.title }}</p>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-md-4">
+                <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                    class="w-100" style="height: 500px; object-fit: cover;">
+            </div>
+            <div class="col-md-4">
+                <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                    class="w-100" style="height: 500px; object-fit: cover;">
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap');
+
+:root {
+    --color-beige: #DCC29C;
+    --color-cream: #F2EFEB;
+    --color-dark: #2C2C2C;
+    --color-grey: #5E5E5E;
+    --color-white: #ffffff;
+
+    --font-heading: 'Crimson Text', serif;
+    --font-body: 'Montserrat', sans-serif;
+}
+
+/* Global Reset & Typography */
+body {
+    font-family: var(--font-body);
+    color: var(--color-dark);
+    background-color: var(--color-white);
+    line-height: 1.8;
+    overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-heading);
+    color: var(--color-dark);
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+}
+
+.display-1 {
+    font-size: 5rem;
+    letter-spacing: -2px;
+}
+
+@media (min-width: 992px) {
+    .display-1 {
+        font-size: 7rem;
+    }
+}
+
+.font-serif {
+    font-family: var(--font-heading);
+}
+
+.text-beige {
+    color: var(--color-beige) !important;
+}
+
+.bg-cream {
+    background-color: var(--color-cream) !important;
+}
+
+.bg-dark-editorial {
+    background-color: var(--color-dark) !important;
+    color: var(--color-white);
+}
+
+/* Editorial Components */
+.editorial-text {
+    font-size: 1.1rem;
+    color: var(--color-grey);
+    font-weight: 300;
+}
+
+.btn-editorial {
+    background: transparent;
+    border: 1px solid var(--color-dark);
+    color: var(--color-dark);
+    padding: 15px 40px;
+    border-radius: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+    transition: all 0.4s ease;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.btn-editorial:hover {
+    background: var(--color-dark);
+    color: var(--color-white);
+}
+
+.btn-editorial-light {
+    border-color: var(--color-white);
+    color: var(--color-white);
+}
+
+.btn-editorial-light:hover {
+    background: var(--color-white);
+    color: var(--color-dark);
+}
+
+/* Navbar */
+.navbar-editorial {
+    padding: 2rem 0;
+    background-color: var(--color-white);
+    transition: padding 0.3s ease;
+}
+
+.navbar-editorial .navbar-brand {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    color: var(--color-dark);
+    letter-spacing: 1px;
+}
+
+.navbar-editorial .nav-link {
+    font-family: var(--font-body);
+    color: var(--color-dark) !important;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    margin: 0 15px;
+    position: relative;
+}
+
+.navbar-editorial .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--color-beige);
+    transition: width 0.3s ease;
+}
+
+.navbar-editorial .nav-link:hover::after {
+    width: 100%;
+}
+
+/* Hero Section */
+.hero-editorial {
+    position: relative;
+    padding-top: 120px;
+    padding-bottom: 100px;
+    background-color: var(--color-cream);
+    overflow: hidden;
+}
+
+.hero-editorial .hero-img-container {
+    position: relative;
+}
+
+.hero-editorial img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    /* Clean minimal look, no shadows */
+}
+
+.hero-editorial .display-1 {
+    position: relative;
+    z-index: 2;
+    line-height: 0.9;
+}
+
+.hero-deco-text {
+    position: absolute;
+    top: 50%;
+    right: -100px;
+    /* Bleed off screen */
+    transform: translateY(-50%) rotate(90deg);
+    font-family: var(--font-heading);
+    font-size: 10rem;
+    color: rgba(220, 194, 156, 0.2);
+    /* Very faint beige */
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Services Minimal List */
+.service-list-item {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 3rem 0;
+    transition: background-color 0.3s ease;
+}
+
+.service-list-item:hover {
+    background-color: rgba(242, 239, 235, 0.5);
+    /* subtle cream hover */
+}
+
+.service-price {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--color-beige);
+}
+
+/* Forms */
+.form-control,
+.form-select {
+    border: none;
+    border-bottom: 1px solid #ddd;
+    border-radius: 0;
+    padding: 15px 0;
+    background: transparent;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+    box-shadow: none;
+    border-color: var(--color-beige);
+    background: transparent;
+}
+
+.form-label {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.7rem;
+    color: var(--color-grey);
+    margin-bottom: 0;
+}
+
+/* Footer */
+.footer-editorial {
+    padding: 5rem 0;
+    background-color: var(--color-white);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.social-link {
+    color: var(--color-dark);
+    margin-right: 20px;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.social-link:hover {
+    color: var(--color-beige);
+}
+
+/* Utilities */
+.section-padding {
+    padding: 8rem 0;
+}
+
+.img-editorial {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Grid adjustments */
+.row-eq-height {
+    display: flex;
+    flex-wrap: wrap;
+}

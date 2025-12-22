@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="section-padding">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="row">
+                    <div class="col-lg-5 mb-5 mb-lg-0">
+                        <h5 class="text-uppercase small ls-2 fw-bold text-beige mb-3">Enquiries</h5>
+                        <h1 class="display-3 mb-5 font-serif">Get in <br>Touch</h1>
+
+                        <div class="mb-5">
+                            <p class="editorial-text mb-1">Email</p>
+                            <a href="mailto:info@beautymaam.com"
+                                class="text-dark text-decoration-none fs-5">info@beautymaam.com</a>
+                        </div>
+
+                        <div class="mb-5">
+                            <p class="editorial-text mb-1">Studio</p>
+                            <p class="fs-5 mb-0">123 Fashion Ave,<br>Design District, City</p>
+                        </div>
+
+                        <div class="mb-5">
+                            <p class="editorial-text mb-1">Phone</p>
+                            <p class="fs-5 mb-0">+91 98765 43210</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 offset-lg-1">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="mb-4">
+                                <label class="form-label">Name</label>
+                                <input type="text" name="name" class="form-control" placeholder="Enter your name"
+                                    required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Email</label>
+                                <input type="email" name="email" class="form-control" placeholder="Enter your email"
+                                    required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Message</label>
+                                <textarea name="message" class="form-control" rows="1" placeholder="How can we help?"
+                                    required style="min-height: 50px;"></textarea>
+                            </div>
+                            <button type="submit" class="btn-editorial mt-3">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

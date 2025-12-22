@@ -1,0 +1,25 @@
+# General
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables
+.env
+
+# Database
+db.sqlite3
+db.sqlite3-journal
+
+# Media
+media/
+
+# Static
+staticfiles/
+
+# VS Code
+.vscode/
+.vs/
+
+# System
+.DS_Store
+Thumbs.db

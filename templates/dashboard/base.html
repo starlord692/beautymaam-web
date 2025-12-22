@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dashboard | Beauty Maam{% endblock %}</title>
+    <!-- Icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <i class='bx bxs-spa'></i> Beauty Maam
+        </div>
+        <ul class="nav-links">
+            <li>
+                <a href="#">
+                    <i class='bx bxs-grid-alt'></i> Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bxs-layer'></i> Service Categories
+                </a>
+            </li>
+            <li class="{% if request.resolver_match.url_name == 'services' %}active{% endif %}">
+                <a href="{% url 'dashboard:services' %}">
+                    <i class='bx bx-cut'></i> Service
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bxs-package'></i> Samples
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bxs-user-account'></i> Clients
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bxs-group'></i> Employees
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bxs-calendar'></i> Schedule
+                </a>
+            </li>
+            <li class="{% if request.resolver_match.url_name == 'settings' %}active{% endif %}">
+                <a href="{% url 'dashboard:settings' %}">
+                    <i class='bx bxs-cog'></i> Settings
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="{% url 'logout' %}">
+                <i class='bx bx-log-out'></i> Log Out
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header>
+            <h1 class="page-title">{% block page_title %}Overview{% endblock %}</h1>
+            <div class="header-right">
+                <div class="search-box">
+                    <i class='bx bx-search'></i>
+                    <input type="text" placeholder="Search">
+                </div>
+                <div class="notification-btn">
+                    <i class='bx bx-bell'></i>
+                </div>
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name={{ request.user.username }}&background=0D8ABC&color=fff"
+                        alt="User" class="user-img">
+                    <div class="user-info">
+                        <span class="user-name">{{ request.user.username }}</span>
+                        <span class="user-role">Admin</span>
+                    </div>
+                    <i class='bx bx-chevron-down'></i>
+                </div>
+            </div>
+        </header>
+
+        <div class="content">
+            {% if messages %}
+            <div class="messages" style="margin-bottom: 20px;">
+                {% for message in messages %}
+                <div
+                    style="padding: 15px; border-radius: 8px; margin-bottom: 10px; background-color: {% if message.tags == 'success' %}#d4edda{% else %}#f8d7da{% endif %}; color: {% if message.tags == 'success' %}#155724{% else %}#721c24{% endif %};">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+</body>
+
+</html>
