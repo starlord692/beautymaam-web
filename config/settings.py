@@ -90,11 +90,16 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Use sqlite by default for local dev if DATABASE_URL not set
 # In Render, DATABASE_URL is automatically provided
 DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
-        conn_max_age=600
+    "default": dj_database_url.config(
+        default=os.environ.get("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=True,
     )
 }
+
+# 🔧 FORCE DB NAME (POSTGRES FIX)
+if DATABASES["default"]["ENGINE"] == "django.db.backends.postgresql":
+    DATABASES["default"]["NAME"] = os.environ.get("POSTGRES_DB", DATABASES["default"]["NAME"])
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
